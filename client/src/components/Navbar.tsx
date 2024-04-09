@@ -2,54 +2,35 @@ import { useState } from "react";
 import { 
   Box,
   IconButton,
-  InputBase,
   Typography,
-  Select,
-  MenuItem,
-  Popover,
-  FormControl,
   useTheme,
   useMediaQuery,
-  Badge,
   Button,
   Drawer,
   Divider
  } from "@mui/material";
  import {
-  Search,
-  Message,
   DarkMode,
   LightMode,
-  Notifications,
-  Help,
   Menu,
-  Close,
   Logout
  } from '@mui/icons-material';
  import { useDispatch, useSelector } from "react-redux";
  import { setMode, signOutUserStart, signOutUserFailure, signOutUserSuccess } from '../redux/userSlice';
  import { Link, useNavigate } from "react-router-dom";
  import { RootState } from '../redux/store';
- import FlexBetween from "../components/FlexBetween";
 
 
  
 export default function Navbar() {
-  const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { palette } = useTheme();
   const { currentUser } = useSelector((state: RootState) => state.user);
-  const isNonMobileScreens = useMediaQuery('(min-width: 1000px)');
 
 
   const theme = useTheme();
-  const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.neutral.dark;
-  const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
-  const alt = theme.palette.background.alt;
 
 
   const handleLogout = async() => {

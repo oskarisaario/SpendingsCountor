@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ISpending } from "../pages/Home";
 
 
 export type IinitialState ={

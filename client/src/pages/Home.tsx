@@ -36,12 +36,12 @@ export type TClass =
   | 'Entertainment' | 'Insurance' | 'Kids' | 'Other';
 
 
-interface ISpending {
+export interface ISpending {
     class: string,
     amount: number
 }
 
-interface ISpendings {
+export interface ISpendings {
   income: number,
   month: Date
   spendings?: Array<ISpending>
