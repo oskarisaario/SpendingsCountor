@@ -4,10 +4,9 @@ import {
   IconButton,
   Typography,
   useTheme,
-  useMediaQuery,
   Button,
   Drawer,
-  Divider
+  Divider,
  } from "@mui/material";
  import {
   DarkMode,
@@ -21,12 +20,14 @@ import {
  import { RootState } from '../redux/store';
 
 
+
  
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: RootState) => state.user);
+
 
 
   const theme = useTheme();

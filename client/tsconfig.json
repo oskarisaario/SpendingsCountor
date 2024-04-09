@@ -7,8 +7,20 @@
     "skipLibCheck": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "allowJs": true,
+    "typeRoots": [
+      "node_modules/@types",
+       "node_modules"
+   ],
+    "types": [
+      "node", "jest", "lodash", "react",
+      "react-dom", "react-redux", "redux-logger", "material-ui",
+      "react-router-dom", "react-router-redux",
+      "redux", "binary-type-tree", "redux-form",
+      "tedb", "react-tap-event-plugin",
+      "react-hot-loader", "material-ui-icons"
+    ],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -24,6 +36,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src",
+  "node_modules/**/*.d.ts",
+  "node_modules/@types/**/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

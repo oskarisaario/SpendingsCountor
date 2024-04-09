@@ -57,7 +57,7 @@ export default function Login() {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <WidgetWrapper width='80%' backgroundColor={theme.palette.background.alt} p='1rem 6%' textAlign='center' maxWidth='800px'>
+      <WidgetWrapper width='80%' style={{backgroundColor: theme.palette.background.alt}} p='1rem 6%' textAlign='center' maxWidth='800px'>
           <Typography 
             fontWeight='bold' 
             fontSize='32px' 

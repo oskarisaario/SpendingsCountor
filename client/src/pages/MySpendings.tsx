@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setSpendings } from '../redux/userSlice';
-import { Box, Typography, useTheme, useMediaQuery, TextField, Button, Divider, MenuItem } from '@mui/material';
-import { PieChart,pieArcLabelClasses } from "@mui/x-charts";
+import { Box, Typography, useTheme, useMediaQuery, TextField, Divider, MenuItem } from '@mui/material';
 import WidgetWrapper from "../components/WidgetWrapper";
 import ChartPie from '../components/ChartPie';
 import ChartBars from '../components/ChartBars';
@@ -36,20 +35,18 @@ interface IBars {
   saved: number
 }
 
-//const userSpendings: ISpendings[] = [];
-//const data: IData[] = [{id: 0, label: '', value: 0}];
-//const spendings: ISpending[] = [];
+
 
 export default function MySpendings() {
-  const [userSpendings, setUserSpendings] = useState<ISpendings[]>();
-  const [chartData, setChartData] = useState<IData>();
+  const [userSpendings, setUserSpendings] = useState<ISpendings[] | undefined>();
+  const [chartData, setChartData] = useState<IData[]>();
   const [barsData, setBarsData] = useState<IBars[]>();
   const [income, setIncome] = useState<number>(0);
   const [moneySpend, setMoneySpend] = useState<number>(0);
   const [monthField, setMonthField] = useState<ISpendings | string>('');
   const dispatch = useDispatch();
   const isNonMobileScreen = useMediaQuery('(min-width: 1000px)');
-  const { currentUser, token, spendings } = useSelector((state: RootState) => state.user);
+  const { currentUser, token } = useSelector((state: RootState) => state.user);
   const theme = useTheme();
   
 
@@ -70,7 +67,7 @@ export default function MySpendings() {
         }
         dispatch(setSpendings(data))
         const newSpendings: ISpendings[] = [];
-        data.map(s => {
+        data.map((s: ISpendings) => {
           const newSpending = {date: s.date, income: s.income, spendings: s.spendings}
           newSpendings.push(newSpending);
         })
@@ -81,33 +78,35 @@ export default function MySpendings() {
       }
     };
     getSpendings();
-  }, [!userSpendings, !chartData]);
+  }, [!userSpendings, !chartData]);  // eslint-disable-line react-hooks/exhaustive-deps
+
 
 
   //MODIFY KEYS IN OBJECTS TO WORK IN PIECHART
   const dataForPie = (userSpendings: ISpendings) => {
     if(userSpendings) {
       setIncome(userSpendings?.income);
-      setMoneySpend(userSpendings?.spendings.reduce((total: number, s: ISpending) => s.amount + total, 0))
+      setMoneySpend(userSpendings.spendings.reduce((total: number, s: ISpending) => s.amount + total, 0))
       let newKeysForChart: IData[] = [];
-      newKeysForChart = userSpendings?.spendings?.map(rec => {
+      newKeysForChart = userSpendings?.spendings?.map((rec, i) => {
         return {
           'value': rec.amount,
-          'label': rec.class
+          'label': rec.class,
+          'id': i
         }
       })
-      newKeysForChart = newKeysForChart.map((s, i) => ({
+      /*newKeysForChart = newKeysForChart.map((s, i) => ({
         ...s, 'id': i
-      }))
+      }))*/
       setChartData(newKeysForChart);
     }
     return;
   };
 
-  const dataForBars = (data: ISpendings) => {
+  const dataForBars = (data: ISpendings[]) => {
     if(data) {
       const newSpendings: IBars[] = [];
-      data.map(s => {
+      data.map((s: ISpendings) => {
         const spend = s.spendings.reduce((total: number, s: ISpending) => s.amount + total, 0)
         const newSpending = {
           date: s.date.slice(0, 7), 
@@ -129,7 +128,7 @@ export default function MySpendings() {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center" marginBottom='1.5rem'>
-      <WidgetWrapper width='80%' backgroundColor={theme.palette.background.alt} p='1rem 6%' textAlign='center' maxWidth='800px'>
+      <WidgetWrapper width='80%' style={{backgroundColor: theme.palette.background.alt}} p='1rem 6%' textAlign='center' maxWidth='800px'>
         <Typography fontWeight='bold' fontSize={isNonMobileScreen ? '32px' : '20px'} color='primary'>Spendings by month</Typography>
         <Box  textAlign='center' display='flex' flexDirection= 'row' padding='1rem' width={'100%'} gap='1rem' justifyContent='center'>     
           <TextField

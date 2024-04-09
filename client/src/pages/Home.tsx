@@ -51,6 +51,7 @@ interface ICurrentSpendings {
   income: number,
   date: Date,
   spendings?: Array<ISpending>
+  _id: string
 }
 
 interface InputField {
@@ -70,8 +71,8 @@ export default function Home() {
   const { token } = useSelector((state: RootState) => state.user);
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [formData, setFormData] = useState<ISpendings | null>();
-  const [income, setIncome] = useState<number | null>();
-  const [month, setMonth] = useState<Date | null>(new Date());
+  const [income, setIncome] = useState<number>(0);
+  const [month, setMonth] = useState<Date>(new Date());
   const [replaceOld, setReplaceOld] = useState<boolean>(false);
   const [replaceId, setReplaceId] = useState<string>('');
   const [warning, setWarning] = useState<boolean>(false);
@@ -81,7 +82,7 @@ export default function Home() {
 
 
 
-  const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleIncomeChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newIncome = Number(e.target.value);
     setIncome(newIncome);
   };
@@ -98,7 +99,7 @@ export default function Home() {
     setInputFields(newInputFields);
   };
 
-  const handleInputChange = (id: number, event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleInputChange = (id: number, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newInputFields = inputFields.map((field) => {
       if (field.id === id) {
         return { ...field, 
@@ -113,13 +114,14 @@ export default function Home() {
     setInputFields(newInputFields);
   };
 
-  const handleAmountChange = (id: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    const newInputFields: InputField[] = inputFields.map((field) => {
+  const handleAmountChange = (id: number, e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const amount = Number(e.target.value);
+    const newInputFields = inputFields.map((field) => {
       if (field.id === id) {
         return { ...field, 
           value: {
             class: field.value.class,
-            amount: event.target.value
+            amount: amount
           }
         };
       }
@@ -131,22 +133,24 @@ export default function Home() {
 
   //Checks if there is already saved Spending with selected month
   const checkDuplicates = () => {
-    const oldSpendings : ICurrentSpendings[] | any[] = currentUser?.spendings;
-    const newSpending = formData?.month.toISOString();
-    let isFound = false;
-    oldSpendings?.map((s) => {
-      if(s.date.slice(0, 7) === newSpending?.toString().slice(0, 7) && !replaceOld){
-        isFound = true;
-        setReplaceId(s._id);
-        return;
+    if(currentUser?.spendings) {
+      const oldSpendings : ICurrentSpendings[] = currentUser!.spendings;
+      const newSpending = formData?.month.toISOString();
+      let isFound = false;
+      oldSpendings.map((s) => {
+        if(String(s.date).slice(0, 7) === newSpending?.toString().slice(0, 7) && !replaceOld){
+          isFound = true;
+          setReplaceId(s._id?? '');
+          return;
+        }
+      })
+      if(isFound){
+        setWarning(true);
+        return false;
       }
-    })
-    if(isFound){
-      setWarning(true);
-      return false;
+      setWarning(false);
+      return true;
     }
-    setWarning(false);
-    return true;
   };
 
 
@@ -201,7 +205,7 @@ export default function Home() {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <WidgetWrapper width='80%' backgroundColor={theme.palette.background.alt} p='1rem 6%' textAlign='center' maxWidth='800px'>
+      <WidgetWrapper width='80%' style={{backgroundColor: theme.palette.background.alt}} p='1rem 6%' textAlign='center' maxWidth='800px'>
           <Typography 
             fontWeight='bold' 
             fontSize='32px' 
@@ -225,8 +229,7 @@ export default function Home() {
                 label={'MM/YYYY'} 
                 defaultValue={dayjs()}
                 disableFuture
-                onChange={(newValue) => {setMonth(newValue)}
-              }
+                onChange={newValue => newValue && setMonth(newValue.toDate())}
               />
               </FlexBetween>
               <InputLabel>Select Class and amount</InputLabel>

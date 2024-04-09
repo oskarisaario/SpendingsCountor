@@ -5,7 +5,7 @@ import FlexBetween from './FlexBetween';
 
 
 
-interface IBars {
+type IBars= {
   date: string,
   income: number,
   moneySpend: number,
@@ -41,7 +41,7 @@ export default function ChartBars({ barsData } : { barsData: IBars[] }) {
 
   return (
     <Box textAlign='center' display='flex' flexDirection='column' padding='1rem' width={'100%'} gap='1rem'>
-      {barsData && (
+      {dataset && (
         <BarChart 
           dataset={dataset}
           xAxis={[{ scaleType: 'band', dataKey: 'date' }]}

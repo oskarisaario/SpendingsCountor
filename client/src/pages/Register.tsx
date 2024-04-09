@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Box, Typography, useTheme, useMediaQuery, TextField, Button } from '@mui/material';
+import { Box, Typography, useTheme, TextField, Button } from '@mui/material';
 import WidgetWrapper from '../components/WidgetWrapper';
 
 
 
 export default function Register() {
   const theme = useTheme();
-  const isNonMobileScreen = useMediaQuery('(min-width: 1000px)');
+  //const isNonMobileScreen = useMediaQuery('(min-width: 1000px)');
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +44,7 @@ export default function Register() {
   
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <WidgetWrapper width='80%' backgroundColor={theme.palette.background.alt} p='1rem 6%' textAlign='center' maxWidth='800px'>
+      <WidgetWrapper width='80%' style={{backgroundColor: theme.palette.background.alt}} p='1rem 6%' textAlign='center' maxWidth='800px'>
           <Typography 
             fontWeight='bold' 
             fontSize='32px' 

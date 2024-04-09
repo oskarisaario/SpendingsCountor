@@ -10,10 +10,17 @@ export type IinitialState ={
   loading: boolean,
 }
 
+interface ICurrentSpendings {
+  income: number,
+  date: Date,
+  spendings?: Array<ISpending>
+  _id: string
+}
+
 export interface ICurrentUser {
   _id: string,
   username: string,
-  spendings: Array<object> | null
+  spendings: Array<ICurrentSpendings> | null
 }
 
 export type TMode = 'light' | 'dark';
