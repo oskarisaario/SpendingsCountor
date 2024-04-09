@@ -7,6 +7,7 @@ import {
   Button,
   Drawer,
   Divider,
+  Theme,
  } from "@mui/material";
  import {
   DarkMode,
@@ -30,7 +31,7 @@ export default function Navbar() {
 
 
 
-  const theme = useTheme();
+  const theme: Theme = useTheme();
   const dark = theme.palette.neutral.dark;
 
 
