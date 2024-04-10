@@ -1,6 +1,6 @@
-import express, {NextFunction} from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
+import express, {NextFunction} from 'express';
 import mongoose from 'mongoose';
 import authRoutes from '../routes/authRoutes'
 import spendingRoutes from '../routes/spendingRoutes';
@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, '../../client/dist')));
 app.get('*', (req, res: express.Response) => {
   res.sendFile(path.join(__dirname, 'client', 'dist, index.html'));
 })
+
 
 
 const PORT = process.env.PORT || 6001;

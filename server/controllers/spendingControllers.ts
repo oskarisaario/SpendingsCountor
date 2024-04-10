@@ -32,7 +32,8 @@ export const createSpending = async(req: Request, res: Response, next: NextFunct
         $set: {
           income: req.body.formData.income,
           month: req.body.formData.month,
-          spendings: req.body.formData.spendings
+          spendings: req.body.formData.spendings,
+          _id: req.body.replaceId
         }
       }, {new: true});
       res.status(200).json(updatedSpending);

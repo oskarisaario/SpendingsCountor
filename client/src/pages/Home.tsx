@@ -140,7 +140,7 @@ export default function Home() {
       oldSpendings.map((s) => {
         if(String(s.month).slice(0, 7) === newSpending?.toString().slice(0, 7) && !replaceOld){
           isFound = true;
-          setReplaceId(s._id?? '');
+          setReplaceId(s._id);
           return;
         }
       })
@@ -172,9 +172,10 @@ export default function Home() {
   
   const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
-    const isOkay = checkDuplicates();
+    let isOkay = checkDuplicates();
     if(isOkay) {
       try {
+        console.log('VANHA', replaceId)
         const res = await fetch(`/api/spendings/createSpending/${currentUser?._id}`, {
           method: 'POST',
           headers: {
@@ -194,6 +195,7 @@ export default function Home() {
         setFormData(null);
         setInputFields([{ id: 0, value: {class: '', amount: 0} }]);
         spendings.length = 0;
+        isOkay = false;
         navigate('/mySpendings');
       } catch (error) {
         console.log(error)
@@ -202,7 +204,7 @@ export default function Home() {
     return;
   };
 
-
+  
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WidgetWrapper width='80%' style={{backgroundColor: theme.palette.background.alt}} p='1rem 6%' textAlign='center' maxWidth='800px'>

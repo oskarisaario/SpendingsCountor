@@ -20,6 +20,7 @@ interface ISpendings{
   month: Date,
   income: number,
   spendings?: Array<ISpending>
+  _id?: string
 }
 
 interface IData {
@@ -65,10 +66,9 @@ export default function MySpendings() {
           console.log(data.message);
           return;
         }
-        //dispatch(setSpendings(data))
         const newSpendings: ISpendings[] = [];
         data.map((s: ISpendings) => {
-          const newSpending = {month: s.month, income: s.income, spendings: s.spendings}
+          const newSpending = {month: s.month, income: s.income, spendings: s.spendings, _id: s._id}
           newSpendings.push(newSpending);
         })
         dispatch(setSpendings(newSpendings))
