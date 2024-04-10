@@ -11,7 +11,7 @@ interface ISpending {
 }
 
 interface ISpendings {
-  date: string,
+  month: Date,
   income: number,
   spendings?: Array<ISpending>
 }

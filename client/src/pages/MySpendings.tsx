@@ -17,7 +17,7 @@ interface ISpending {
 }
 
 interface ISpendings{
-  date: string,
+  month: Date,
   income: number,
   spendings?: Array<ISpending>
 }
@@ -29,7 +29,7 @@ interface IData {
 }
 
 interface IBars {
-  date: string,
+  month: string,
   income: number,
   moneySpend: number,
   saved: number
@@ -65,12 +65,13 @@ export default function MySpendings() {
           console.log(data.message);
           return;
         }
-        dispatch(setSpendings(data))
+        //dispatch(setSpendings(data))
         const newSpendings: ISpendings[] = [];
         data.map((s: ISpendings) => {
-          const newSpending = {date: s.date, income: s.income, spendings: s.spendings}
+          const newSpending = {month: s.month, income: s.income, spendings: s.spendings}
           newSpendings.push(newSpending);
         })
+        dispatch(setSpendings(newSpendings))
         setUserSpendings(newSpendings);
         dataForBars(data);
       } catch (error) {
@@ -109,7 +110,7 @@ export default function MySpendings() {
       data.map((s: ISpendings) => {
         const spend = s.spendings.reduce((total: number, s: ISpending) => s.amount + total, 0)
         const newSpending = {
-          date: s.date.slice(0, 7), 
+          month: String(s.month).slice(0, 7), 
           income: s.income, 
           moneySpend: spend,
           saved: s.income - spend
@@ -140,7 +141,7 @@ export default function MySpendings() {
             onChange={(e) => handleMonthChange(e)}
           >
             {userSpendings ? userSpendings.map((s, i) => (
-              <MenuItem key={i} value={s.date.slice(0, 7)} onClick={() => dataForPie(s)}>{s.date.slice(0, 7)}</MenuItem>
+              <MenuItem key={i} value={String(s.month).slice(0, 7)} onClick={() => dataForPie(s)}>{String(s.month).slice(0, 7)}</MenuItem>
             )) : (
               <Typography textAlign='center'>No spendings added yet</Typography>
             )}
@@ -164,7 +165,7 @@ export default function MySpendings() {
             <Divider sx={{marginBottom: '1rem', marginTop: '1rem'}}/>            
             <Typography fontWeight='bold' fontSize={isNonMobileScreen ? '32px' : '20px'} color='primary'>All your spendings by class</Typography>
             {userSpendings && (
-              <HorizontalBars userSpendings = {userSpendings} />
+              <HorizontalBars userSpendings={userSpendings} />
             )}
           </>
         )}

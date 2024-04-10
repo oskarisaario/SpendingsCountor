@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 export interface ISpending extends mongoose.Document {
   income: number,
-  date: Date,
+  month: Date,
   spendings: Array<object>
 };
 
@@ -15,7 +15,7 @@ const SpendingSchema = new Schema<ISpending>({
     type: Number,
     required: true
   },
-  date: {
+  month: {
     type: Date,
     required: true
   },

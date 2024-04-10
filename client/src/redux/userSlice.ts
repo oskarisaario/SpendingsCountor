@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ISpending } from "../pages/Home";
+import {  ISpending } from "../pages/Home";
 
 
 export type IinitialState ={
@@ -12,9 +12,9 @@ export type IinitialState ={
 
 interface ICurrentSpendings {
   income: number,
-  date: Date,
+  month: Date,
   spendings?: Array<ISpending>
-  _id: string
+  _id?: string
 }
 
 export interface ICurrentUser {
@@ -54,7 +54,7 @@ const userSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
-    setSpendings: (state, action: PayloadAction<Array<ISpending>>) => {
+    setSpendings: (state, action: PayloadAction<[] |Array<ICurrentSpendings>>) => {
       if(state.currentUser){
         state.currentUser.spendings = action.payload;
       }

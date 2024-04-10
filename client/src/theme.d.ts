@@ -1,25 +1,31 @@
-import { PaletteMode } from "@mui/material";
+import { PaletteColorOptions, ThemeOptions } from "@mui/material";
 
 
 
-import "@mui/material/styles/createPalette";
-declare module "@mui/material/styles/createPalette" {
-  interface PaletteOptions {
-    neutral: PaletteColorOptions;
+
+declare module "@mui/material/styles/" {
+  interface ThemeOptions {
+    neutral?: PaletteColorOptions;
   }
-}
 
-declare module '@mui/material/styles' {
   interface Palette {
-    custom: Palette['primary'],
-    custom: Palette['neutral'],
-    custom: Palette['background']
+    neutral?: PaletteColor,
+    background: PaletteColor
   }
 
   interface PaletteOptions {
-    custom?: PaletteOptions['primary'],
-    custom: Palette['neutral'],
-    custom: Palette['background']
+    neutral?: PaletteColorOptions,
+    background?: PaletteColorOptions
+  }
+
+  interface SimplePaletteColorOptions {
+    dark?: string;
+    main?: string;
+    light?: string;
+    mediumMain?: string;
+    medium?: string;
+    default?: string;
+    alt?: string;
   }
 
   interface PaletteColor {
@@ -31,7 +37,31 @@ declare module '@mui/material/styles' {
     default?: string;
     alt?: string;
   }
+
 }
+
+/*declare module '@mui/material/styles' {
+  interface Palette {
+    custom: Palette['primary'],
+    custom: Palette['neutral'],
+    custom: Palette['background']
+  }*/
+
+  /*interface PaletteOptions {
+    custom?: PaletteOptions['primary'],
+    custom: PaletteOptions['neutral'],
+    custom: PaletteOptions['background']
+  }
+
+  interface PaletteColor {
+    dark?: string;
+    main?: string;
+    light?: string;
+    mediumMain?: string;
+    medium?: string;
+    default?: string;
+    alt?: string;
+  }*/
 
 export const colorTokens = {
   grey: {

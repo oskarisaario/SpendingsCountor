@@ -13,10 +13,9 @@ export const createSpending = async(req: Request, res: Response, next: NextFunct
     const { userId } = req.params;
     //SAVE NEW SPENDING
     if(req.body.replaceOld === false){
-      console.log('uusi')
       const newSpending = new Spending({
         income: req.body.formData.income,
-        date: req.body.formData.month,
+        month: req.body.formData.month,
         spendings: req.body.formData.spendings
       });
       const savedSpending = await newSpending.save();
@@ -32,7 +31,7 @@ export const createSpending = async(req: Request, res: Response, next: NextFunct
       const updatedSpending = await Spending.findByIdAndUpdate(req.body.replaceId, {
         $set: {
           income: req.body.formData.income,
-          date: req.body.formData.month,
+          month: req.body.formData.month,
           spendings: req.body.formData.spendings
         }
       }, {new: true});

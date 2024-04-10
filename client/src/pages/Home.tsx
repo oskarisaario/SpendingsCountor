@@ -47,11 +47,11 @@ export interface ISpendings {
   spendings?: Array<ISpending>
 }
 
-interface ICurrentSpendings {
+interface ICurSpendings {
   income: number,
-  date: Date,
+  month: Date,
   spendings?: Array<ISpending>
-  _id: string
+  _id?: string
 }
 
 interface InputField {
@@ -134,11 +134,11 @@ export default function Home() {
   //Checks if there is already saved Spending with selected month
   const checkDuplicates = () => {
     if(currentUser?.spendings) {
-      const oldSpendings : ICurrentSpendings[] = currentUser!.spendings;
+      const oldSpendings : ICurSpendings[] = currentUser!.spendings;
       const newSpending = formData?.month.toISOString();
       let isFound = false;
       oldSpendings.map((s) => {
-        if(String(s.date).slice(0, 7) === newSpending?.toString().slice(0, 7) && !replaceOld){
+        if(String(s.month).slice(0, 7) === newSpending?.toString().slice(0, 7) && !replaceOld){
           isFound = true;
           setReplaceId(s._id?? '');
           return;
