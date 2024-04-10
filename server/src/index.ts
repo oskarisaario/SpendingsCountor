@@ -20,7 +20,7 @@ app.use('/api/spendings', spendingRoutes);
 
 
 //For build
-app.use(express.static(path.join(__dirname, '/client/dist')));
+app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 app.get('*', (req, res: express.Response) => {
   res.sendFile(path.join(__dirname, 'client', 'dist, index.html'));
