@@ -138,6 +138,7 @@ export default function Home() {
       const newSpending = formData?.month.toISOString();
       let isFound = false;
       oldSpendings.map((s) => {
+        console.log('S', s)
         if(String(s.month).slice(0, 7) === newSpending?.toString().slice(0, 7) && !replaceOld){
           isFound = true;
           setReplaceId(s._id);
@@ -204,7 +205,7 @@ export default function Home() {
     return;
   };
 
-  
+
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WidgetWrapper width='80%' style={{backgroundColor: theme.palette.background.alt}} p='1rem 6%' textAlign='center' maxWidth='800px'>
