@@ -38,6 +38,10 @@ declare module "@mui/material/styles/" {
     alt?: string;
   }
 
+  interface TypeBackground {
+    alt: string;
+}
+
 }
 
 /*declare module '@mui/material/styles' {
