@@ -10,12 +10,12 @@ declare module "@mui/material/styles/" {
 
   interface Palette {
     neutral?: PaletteColor,
-    background: PaletteColor
+    //background: PaletteColor
   }
 
   interface PaletteOptions {
     neutral?: PaletteColorOptions,
-    background?: PaletteColorOptions
+    //background?: PaletteColorOptions
   }
 
   interface SimplePaletteColorOptions {
