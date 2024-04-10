@@ -4,9 +4,12 @@ dotenv.config();
 import mongoose from 'mongoose';
 import authRoutes from '../routes/authRoutes'
 import spendingRoutes from '../routes/spendingRoutes';
+
+//For build
 import path from 'path';
 
-
+//For build
+//const __dirname = path.resolve();
 
 const app = express();
 app.use(express.json());
@@ -16,7 +19,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/spendings', spendingRoutes);
 
 
-const __dirname = path.resolve();
+//For build
 app.use(express.static(path.join(__dirname, '/client/dist')));
 
 app.get('*', (req, res: express.Response) => {
